@@ -1,0 +1,10 @@
+#忽略目录
+node_modules
+.env
+.env.enc
+# 忽略 Yarn 4+ 的缓存和链接记录
+.yarn-cache
+.yam
+.yamrc.yml
+# 忽略 node_modules（如果你用的是 node-modules 模式）
+node_modules/
