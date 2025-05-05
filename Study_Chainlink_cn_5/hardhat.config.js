@@ -1,11 +1,11 @@
-require('@nomicfoundation/hardhat-toolbox');
-require('@chainlink/env-enc').config(); //导入加密环境变量文件
+require("@nomicfoundation/hardhat-toolbox");
+require("@chainlink/env-enc").config(); //导入加密环境变量文件
 //require('@nomicfoundation/hardhat-verify'); //合约部署后自动验证合约源代码并将其与区块链上的实际合约进行匹配
-require('./tasks'); //导入任务文件
-require('hardhat-deploy'); //导入hardhat-deploy插件,测试用
+require("./tasks"); //导入任务文件
+require("hardhat-deploy"); //导入hardhat-deploy插件,测试用
 //设置代理
-const { ProxyAgent, setGlobalDispatcher } = require('undici');
-const proxyAgent = new ProxyAgent('http://192.168.1.187:7897');
+const { ProxyAgent, setGlobalDispatcher } = require("undici");
+const proxyAgent = new ProxyAgent("http://192.168.1.187:7897");
 setGlobalDispatcher(proxyAgent);
 
 const SEPOLIA_SEPOLIA_RPC_URL = process.env.SEPOLIA_SEPOLIA_RPC_URL;
@@ -14,8 +14,8 @@ const PRIVATE_KEY_1 = process.env.PRIVATE_KEY_1;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: '0.8.26',
-  //defaultNetwork: 'hardhat',
+  solidity: "0.8.26",
+  defaultNetwork: "hardhat",
   networks: {
     sepolia: {
       url: SEPOLIA_SEPOLIA_RPC_URL, // 使用环境变量中SEPOLIA_SEPOLIA_RPC_URL,测试网的url
@@ -45,4 +45,4 @@ module.exports = {
 // Hardhat 中 hardhat-deploy 插件的一部分，它用于给部署脚本打标签（tags）
 // 'all'：这个标签通常用于标记所有的部署脚本。通过这个标签，你可以执行所有脚本。
 // 'FundMe'：这是为当前脚本专门指定的标签，标记为与 FundMe 相关的部署脚本。
-module.exports.tags = ['all', 'FundMe']; //给所有的合约添加标签
+module.exports.tags = ["all", "FundMe"]; //给所有的合约添加标签

@@ -27,11 +27,11 @@ contract FundMe {
 
     bool public getFundSuccess = false;
 
-    constructor(uint256 _lockTime) {
+    constructor(uint256 _lockTime,address dataFeedAddr) {
         // sepolia testnet,喂价合约地址
         
         dataFeed 
-        =AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        =AggregatorV3Interface(dataFeedAddr);
         owner = msg.sender;
         deploymentTimestamp = block.timestamp;
         lockTime = _lockTime;
