@@ -1,3 +1,6 @@
+//代码准则:1.注意标点符号是否错了,或多了,或少了2.注意某些命令是否确实某个字母3.注意代码是否闭合(少了个括号或者}号)4.注意导入库,模块,文件的版本与位置
+//脚本主题:1.构造函数单元测试
+//业务场景功能:
 const { assert } = require("chai");
 const { ethers, deployments, getNamedAccounts } = require("hardhat");
 

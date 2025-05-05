@@ -8,6 +8,9 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 // 3. 在锁定期内，达到目标值，生产商可以提款
 // 4. 在锁定期内，没有达到目标值，投资人在锁定期以后退款
 
+//需要测试的单元
+// 1. 构造函数2.fund函数3.getFudn函数4.refund
+
 contract FundMe {
     mapping(address => uint256) public fundersToAmount ;
     uint256 constant MINIMUM_VALUE = 10 * 10 ** 18; //USD
