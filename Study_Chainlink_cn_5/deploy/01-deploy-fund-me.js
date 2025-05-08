@@ -1,14 +1,13 @@
 //代码准则:1.注意标点符号是否错了,或多了,或少了2.注意某些命令是否确实某个字母3.注意代码是否闭合(少了个括号或者}号)4.注意导入库,模块,文件的版本与位置
 //主题:优化代码,使用deploy部署合约
 
-// const { Network } = require("ethers");
+const { network } = require("hardhat");
 const {
-  devlopmentChains,
+  developmentChains,
   networkConfig,
   LOCK_TIME,
   CONFIRMATIONS,
 } = require("../helper-hardhat-config.js");
-const { network } = require("hardhat");
 //引入调用getNamedAccounts,调用hardhat.config.js文件中的namedAccounts配置,deployments用来部署函数
 //定义异步（async）模块导出函数，作为部署脚本在 hardhat 执行时被调用
 //getNamedAccounts 和 deployments 是由 hardhat-deploy 插件提供的对象，它们会传递给你以供你进行合约部署。你可以通过这两个对象来获取账户信息和执行合约部署。
@@ -17,15 +16,19 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { firstAccount } = await getNamedAccounts();
   //从 deployments 对象中提取出 deploy 方法，它是 hardhat-deploy 插件提供的用于部署合约的函数。通过 deploy 方法来部署指定的合约
   const { deploy } = deployments;
+
   let dataFeedAddr;
+  let confirmations;
   //判断当前网络是否为 hardhat 网络
   //如果是 hardhat 网络,则使用 MockV3Aggregator 合约地址
   //如果不是 hardhat 网络,则使用环境变量中的 DATA_FEED_ADDR 地址
-  if (devlopmentChains.includes(network.name)) {
+  if (developmentChains.includes(network.name)) {
     const mockV3Aggregator = await deployments.get("MockV3Aggregator");
     dataFeedAddr = mockV3Aggregator.address;
+    confirmations = 0; // 如果是本地网络，确认数设置为 3
   } else {
     dataFeedAddr = networkConfig[network.config.chainId].ethUsdDataFeed;
+    confirmations = CONFIRMATIONS; // 如果是测试网络，使用配置文件中的确认数
   }
   //调用 deploy 方法来部署名为 'FundMe' 的合约。'FundMe' 是你想要部署的合约名称，应该与合约文件名一致
   const fundMe = await deploy("FundMe", {
@@ -35,7 +38,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     args: [LOCK_TIME, dataFeedAddr], //
     //启用日志输出。log: true 表示在部署过程中会打印相关日志信息，包括合约的部署地址等信息.hardhat-deploy 提供的配置项
     log: true,
-    waitConfirmations: CONFIRMATIONS, // 等待 5 个区块确认
+    waitConfirmations: confirmations, // 等待 5 个区块确认
     // waitConfirmations: confirmations,
   });
 

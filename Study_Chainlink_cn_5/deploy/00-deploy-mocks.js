@@ -4,7 +4,7 @@
 const {
   DECIMAL,
   INITIAL_ANSWER,
-  devlopmentChains,
+  developmentChains,
 } = require("../helper-hardhat-config.js");
 //引入调用getNamedAccounts,调用hardhat.config.js文件中的namedAccounts配置,deployments用来部署函数
 //定义异步（async）模块导出函数，作为部署脚本在 hardhat 执行时被调用
@@ -12,7 +12,7 @@ const {
 module.exports = async ({ getNamedAccounts, deployments }) => {
   //判断当前网络是否为 hardhat 网络
   //如果是 hardhat 网络,则使用 MockV3Aggregator 合约地址,如果不是 hardhat 网络,则使用环境变量中的 DATA_FEED_ADDR 地址
-  if (devlopmentChains.includes(network.name)) {
+  if (developmentChains.includes(network.name)) {
     //调用 getNamedAccounts() 函数来获取账户列表，并使用解构赋值将 firstAccount 提取出来.getNamedAccounts() 返回一个对象，包含所有已命名的账户。一般来说，这些账户在 hardhat.config.js 中配置过
     const { firstAccount } = await getNamedAccounts();
     //从 deployments 对象中提取出 deploy 方法，它是 hardhat-deploy 插件提供的用于部署合约的函数。通过 deploy 方法来部署指定的合约

@@ -3,6 +3,9 @@ require("@chainlink/env-enc").config(); //导入加密环境变量文件
 //require('@nomicfoundation/hardhat-verify'); //合约部署后自动验证合约源代码并将其与区块链上的实际合约进行匹配
 require("./tasks"); //导入任务文件
 require("hardhat-deploy"); //导入hardhat-deploy插件,测试用
+require("@nomicfoundation/hardhat-ethers");
+require("hardhat-deploy-ethers");
+
 //设置代理
 const { ProxyAgent, setGlobalDispatcher } = require("undici");
 const proxyAgent = new ProxyAgent("http://192.168.1.187:7897");

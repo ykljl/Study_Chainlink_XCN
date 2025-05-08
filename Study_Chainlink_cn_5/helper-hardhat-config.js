@@ -1,7 +1,7 @@
 const DECIMAL = 8;
 const INITIAL_ANSWER = 300000000000;
-const devlopmentChains = ["hardhat", "local"]; //本地链
-const LOCK_TIME = 180; //锁定时间
+const developmentChains = ["hardhat", "local"]; //本地链
+const LOCK_TIME = 300; //锁定时间
 const CONFIRMATIONS = 5; // 等待 5 个区块确认
 const networkConfig = {
   11155111: {
@@ -16,7 +16,7 @@ const networkConfig = {
 module.exports = {
   DECIMAL,
   INITIAL_ANSWER,
-  devlopmentChains,
+  developmentChains,
   networkConfig,
   LOCK_TIME,
   CONFIRMATIONS,
