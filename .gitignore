@@ -8,3 +8,15 @@ node_modules
 .yamrc.yml
 # 忽略 node_modules（如果你用的是 node-modules 模式）
 node_modules/
+# Hardhat files
+cache
+artifacts
+deployments
+
+# TypeChain files
+typechain
+typechain-types
+
+# solidity-coverage files
+coverage
+coverage.json
