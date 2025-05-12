@@ -9,17 +9,17 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 // 4. 在锁定期内，没有达到目标值，投资人在锁定期以后退款
 
 //需要测试的单元
-// 1. 构造函数2.fund函数3.getFudn函数4.refund
+// 1. 构造函数2.fund函数(存款)3.getFudn函数4.refund
 
 contract FundMe {
     mapping(address => uint256) public fundersToAmount;
-    //存放金额限制最低为10美元
-    uint256 constant MINIMUM_VALUE = 10 * 10 ** 18; //USD
+    //存放金额限制最低为1美元
+    uint256 constant MINIMUM_VALUE = 1 * 10 ** 18; //USD
     //声明，表示你在合约内部使用 AggregatorV3Interface 类型的变量 dataFeed
     //写测试用例,为了调用dataFeed,更改权限
     AggregatorV3Interface public dataFeed;
-    //目标值为1000美元
-    uint256 constant TARGET = 1000 * 10 ** 18;
+    //目标值为10美元
+    uint256 constant TARGET = 10 * 10 ** 18;
 
     address public owner;
 
@@ -46,7 +46,7 @@ contract FundMe {
         require(convertEthToUsd(msg.value) >= MINIMUM_VALUE, "Send more ETH");
         //当前时间戳小于合约部署时的时间戳+设置的时间现在返回 "window is closed"
         require(block.timestamp < deploymentTimestamp + lockTime, "window is closed");
-        fundersToAmount[msg.sender] = msg.value;
+        fundersToAmount[msg.sender] += msg.value;
     }
 
     function getChainlinkDataFeedLatestAnswer() public view returns (int) {

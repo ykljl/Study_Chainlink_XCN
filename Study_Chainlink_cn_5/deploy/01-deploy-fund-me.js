@@ -1,8 +1,10 @@
 //代码准则:1.注意标点符号是否错了,或多了,或少了2.注意某些命令是否确实某个字母3.注意代码是否闭合(少了个括号或者}号)4.注意导入库,模块,文件的版本与位置
-//主题:优化代码,使用deploy部署合约
+//主题:优化代码,使用deploy部署合约,并判断是否需要验证
 
 const { network } = require("hardhat");
 const {
+  DECIMAL,
+  INITIAL_ANSWER,
   developmentChains,
   networkConfig,
   LOCK_TIME,
@@ -21,11 +23,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   let confirmations;
   //判断当前网络是否为 hardhat 网络
   //如果是 hardhat 网络,则使用 MockV3Aggregator 合约地址
-  //如果不是 hardhat 网络,则使用环境变量中的 DATA_FEED_ADDR 地址
+  //如果不是 hardhat 网络,则使用环境变量中的 DATA_FEED_ADDR 地址()
   if (developmentChains.includes(network.name)) {
     const mockV3Aggregator = await deployments.get("MockV3Aggregator");
     dataFeedAddr = mockV3Aggregator.address;
-    confirmations = 0; // 如果是本地网络，确认数设置为 3
+    confirmations = 0; // 如果是本地网络，确认数设置为 0
   } else {
     dataFeedAddr = networkConfig[network.config.chainId].ethUsdDataFeed;
     confirmations = CONFIRMATIONS; // 如果是测试网络，使用配置文件中的确认数
@@ -55,4 +57,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     console.log("不是sepolia网络,或者没有API,跳过验证...");
   }
 };
-module.exports.tags = ["all", "FundMe"];
+module.exports.tags = ["all", "Fundme"];

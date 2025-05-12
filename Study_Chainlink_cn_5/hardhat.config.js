@@ -19,6 +19,10 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 module.exports = {
   solidity: "0.8.26",
   defaultNetwork: "hardhat",
+  //集成测试总等待时间300秒
+  mocha: {
+    timeout: 300000,
+  },
   networks: {
     sepolia: {
       url: SEPOLIA_SEPOLIA_RPC_URL, // 使用环境变量中SEPOLIA_SEPOLIA_RPC_URL,测试网的url
@@ -37,12 +41,16 @@ module.exports = {
   },
   //调用该配置文件中的配置名时,会调用配置名下的配置,例如deployer的default是0,就会调用序号为0的账户地址
   namedAccounts: {
-    deployer: {
-      default: 0, // 序号为0的账户地址
-    },
     firstAccount: {
-      default: 1, // 序号为1的账户地址
+      default: 0, // 序号为1的账户地址
     },
+    secondAccount: {
+      default: 1, // 序号为0的账户地址
+    },
+  },
+  gasReporter: {
+    enabled: true,
+    //enabled: false,
   },
 };
 // Hardhat 中 hardhat-deploy 插件的一部分，它用于给部署脚本打标签（tags）
